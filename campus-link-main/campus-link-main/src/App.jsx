@@ -10,6 +10,9 @@ import TimetablePage from './components/Timetable/TimetablePage';
 import HostelComplaintsPage from './components/HostelComplaints/HostelComplaintsPage';
 // Import the AdminAnnouncementsPage from its new location
 import AdminAnnouncementsPage from './components/AdminAnnouncements/AdminAnnouncementsPage';
+// New: Import Polls pages
+import AdminPollsPage from './components/Polls/AdminPollsPage';
+import UserPollsPage from './components/Polls/UserPollsPage';
 
 
 export default function App() {
@@ -56,13 +59,18 @@ export default function App() {
         // Render different pages based on activePage and user role
         switch (activePage) {
             case 'dashboard':
-                return <Dashboard setActivePage={setActivePage} user={user} />; // Pass user to Dashboard if needed
+                return <Dashboard setActivePage={setActivePage} user={user} />;
             case 'announcements':
-                // Conditional rendering for Admin vs. Student announcements view
                 return user.role === 'admin' ? (
-                    <AdminAnnouncementsPage user={user} /> // Admin view for managing announcements
+                    <AdminAnnouncementsPage user={user} />
                 ) : (
-                    <AnnouncementsPage user={user} /> // Student/general user view for reading announcements
+                    <AnnouncementsPage user={user} />
+                );
+            case 'polls':
+                return user.role === 'admin' ? (
+                    <AdminPollsPage user={user} />
+                ) : (
+                    <UserPollsPage user={user} />
                 );
             case 'lost-and-found':
                 return <LostAndFoundPage user={user} />;
@@ -71,24 +79,38 @@ export default function App() {
             case 'complaints':
                 return <HostelComplaintsPage user={user} />;
             default:
-                // Fallback to dashboard if activePage is unknown
                 return <Dashboard setActivePage={setActivePage} user={user} />;
         }
     };
 
     return (
-        <div className="bg-gray-100 min-h-screen font-sans">
-            <div className="flex flex-col lg:flex-row">
-                {/* Sidebar is only shown if a user is logged in */}
+        <div className="bg-gray-100 font-sans">
+            {/* Sidebar is fixed, main content has left padding */}
+            <div className="min-h-screen">
                 {user && (
-                    <Sidebar
-                        activePage={activePage}
-                        setActivePage={setActivePage}
-                        user={user}
-                        onLogout={handleLogout}
-                    />
+                    <div>
+                        <div className="hidden lg:block">
+                            <div className="fixed left-0 top-0 h-full w-56 z-30">
+                                <Sidebar
+                                    activePage={activePage}
+                                    setActivePage={setActivePage}
+                                    user={user}
+                                    onLogout={handleLogout}
+                                />
+                            </div>
+                        </div>
+                        <div className="block lg:hidden">
+                            <Sidebar
+                                activePage={activePage}
+                                setActivePage={setActivePage}
+                                user={user}
+                                onLogout={handleLogout}
+                            />
+                        </div>
+                    </div>
                 )}
-                <main className="flex-1 transition-all duration-300">
+                {/* Main content area: add left padding on large screens to avoid overlap with fixed sidebar */}
+                <main className={`flex-1 overflow-y-auto ${user ? 'lg:pl-56' : ''}`}>
                     {renderPage()}
                 </main>
             </div>

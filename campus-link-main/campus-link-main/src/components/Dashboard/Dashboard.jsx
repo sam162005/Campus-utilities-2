@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Search, Calendar, MessageSquare } from 'lucide-react';
+import { Mail, Search, Calendar, MessageSquare, BarChart2 } from 'lucide-react'; // Import BarChart2 for polls
 
 const Dashboard = ({ setActivePage }) => {
     const cards = [
@@ -7,6 +7,7 @@ const Dashboard = ({ setActivePage }) => {
         { title: 'Lost & Found', icon: Search, page: 'lost-and-found', description: 'Report or find lost items.', color: 'bg-green-500' },
         { title: 'My Timetable', icon: Calendar, page: 'timetable', description: 'View your weekly class schedule.', color: 'bg-purple-500' },
         { title: 'Hostel Complaints', icon: MessageSquare, page: 'complaints', description: 'Register and track hostel issues.', color: 'bg-red-500' },
+        { title: 'Polls & Feedback', icon: BarChart2, page: 'polls', description: 'Participate in campus polls and give feedback.', color: 'bg-yellow-500' }, // New Polls card
     ];
 
     return (

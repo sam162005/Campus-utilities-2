@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { sendOtp, verifyOtpAndRegister, login } = require('../controllers/authController'); // Import new functions
-const auth = require('../middleware/auth'); // Import auth middleware if you have protected routes
+// const auth = require('../middleware/auth'); // Import auth middleware if you have protected routes
 
 // Public routes
 router.post('/send-otp', sendOtp);

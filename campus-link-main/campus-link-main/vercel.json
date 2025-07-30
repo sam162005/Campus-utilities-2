@@ -1,0 +1,8 @@
+    {
+      "build": {
+        "env": {
+          "VITE_REACT_APP_BACKEND_URL": "@vite_react_app_backend_url"
+        }
+      }
+    }
+  
